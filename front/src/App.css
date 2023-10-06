@@ -1,0 +1,86 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*{
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.Screen{
+  width: 100%;
+  height: 100%;
+  align-self:'stretch';
+  max-height: 100%;
+}
+.UI {
+  flex:1;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  align-self:'stretch'
+}
+
+.Globe {
+  position: absolute;
+  margin-top: -8px;
+  margin-left: -8px;
+  width: 100%;
+  height: 100%;
+}
+
+.FlowButton {
+  background: transparent;
+  font-size: 40px;
+  border: none;
+  width: 40px;
+  height: 40px;
+  z-index: 99;
+}
