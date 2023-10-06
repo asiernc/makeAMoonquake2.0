@@ -1,0 +1,30 @@
+@startuml UML
+
+skinparam roundCorner 15
+
+node "<Library.js />" as node {
+    folder "Panel" as panel {
+        folder "Bottom"  as bottom {
+            folder "ButtonContainer" as buttonC {
+                node "<LibrarySondas.js />" as sondasjs {
+                }
+                node "<LibraryQuakes.js />" as quakesjs {
+                }
+            }
+        }
+        folder "Top"  as top {
+            folder "Close" as close {
+                node "<Close.js />" as closejs {
+                }
+            }
+            folder "Title" as title {
+                rectangle "title" as titleC
+            }
+             folder "Spacer" as spacer {
+                rectangle "spacer" as spacerC
+            }
+        }
+    }
+
+@enduml
+

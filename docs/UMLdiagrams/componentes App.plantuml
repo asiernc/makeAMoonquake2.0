@@ -1,0 +1,33 @@
+@startuml UML
+
+skinparam roundCorner 15
+
+artifact "Moonquake Map 2.0" as mquake {
+    folder "Screen" as screen {
+        folder "UI" as ui {
+            node "<MainMenu.js />" {
+
+            }
+            node "<MenuInteraction.js />" {
+
+            }
+            node "<Library.js />" {
+
+            }
+            rectangle "Demo"{
+
+            }
+            rectangle "Documentation" {
+
+            }
+        }
+        folder "Globe" as globe {
+            node "Globe" as globen {
+
+            }
+        }
+    }
+}   
+
+@enduml
+

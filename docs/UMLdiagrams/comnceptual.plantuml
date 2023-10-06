@@ -1,0 +1,36 @@
+@startuml UML
+
+skinparam roundCorner 15
+
+artifact "MoonQuake Map 2.0" as map{
+    folder "BackEnd" as back {
+        node "Api" as api {
+            rectangle "Python" as pythonapi{
+                rectangle "FastAPI" as fastapi
+            }
+        }
+        node "DataFormatter" as formatter {
+            rectangle "Python" as pythonformatter{
+                rectangle "Formatter" as formt
+            }
+        }
+        node "Plotter" as plotter {
+            rectangle "Python" as pythonplotter {
+                rectangle "Plotter" as plotterrrr{
+
+                }
+            }
+        }
+    }   
+    folder "FrontEnd" as front {
+        node "Web App" as web {
+            rectangle "React" as react{
+                rectangle "JavaScript" as js
+                rectangle "JSX + CSS" as jsxcss
+            }
+        }   
+    }
+}
+
+@enduml
+

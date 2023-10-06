@@ -1,0 +1,27 @@
+@startuml UML
+
+skinparam roundCorner 15
+
+node "<MenuInteraction.js />" as node{
+    folder "OtherControls" as otherControls {
+        node "<OtherControls.js />" as otherControlsc {
+        }
+    }
+    folder "OtherMaps" as otherMaps {
+        node "<OtherMaps.js />" as otherMapsc {
+        }
+    }
+    folder "Panel" as panel {
+        folder "Component"  as componentS {
+            node "<Sondas.js />" as sondas {
+            }
+        }
+        folder "Component"  as componentQ {
+            node "<Moonquakes.js />" as quakes {
+            }
+        }
+    }
+}
+
+@enduml
+

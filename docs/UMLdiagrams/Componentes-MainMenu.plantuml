@@ -1,0 +1,21 @@
+@startuml UML
+
+skinparam roundCorner 15
+
+node "<MainMenu.js />" as node{
+    folder "MainMenu" as mm {
+        folder "ButtonComponent" as buttonC {
+            rectangle "Tour button" as tour {
+            }
+            rectangle "Interaction button" as interaction {
+            }
+            rectangle "Library button" as library {
+            }
+            rectangle "Documentation button" as doc {
+            }
+        }
+    }
+}
+
+@enduml
+
