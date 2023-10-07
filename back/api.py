@@ -55,8 +55,7 @@ async def get_plots():
 @app.get("/test")
 async def test():
     formatter = Formatter()
-    formatter.fetch_quakes_data()
-    return formatter.filter_quakes_data()
+    
 
 
 

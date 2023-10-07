@@ -6,10 +6,13 @@ import json
 class Formatter():
 
     def __init__(self):
-        # pds-geosciences.wustl.edu - /lunar/urn-nasa-pds-apollo_seismic_event_catalog/data/ # CSV  
+        # pds-geosciences.wustl.edu - /lunar/urn-nasa-pds-apollo_seismic_event_catalog/data/ # QUAKES CSV  
         self._quakes_url = "https://pds-geosciences.wustl.edu/lunar/urn-nasa-pds-apollo_seismic_event_catalog/data"
+        # https://nssdc.gsfc.nasa.gov/planetary/lunar/apolloland.html # SONDAS DATA
+        self._spacecrafts_url = "https://nssdc.gsfc.nasa.gov/planetary/lunar/apolloland.html"
         # pds-geosciences.wustl.edu - /lunar/urn-nasa-pds-apollo_pse/data/xa/continuous_waveform/ # MSEED
         self._mseed_url = "https://pds-geosciences.wustl.edu/lunar/urn-nasa-pds-apollo_pse/data/xa/continuous_waveform"
+
         self._resource_dir = "resources"
 
     # Private function to download file from url to resource directory
@@ -79,3 +82,24 @@ class Formatter():
             }
             data.append(obj)
         return data
+    
+    async def fetch_spacecrafts_data(self):
+        url = f'{self._quakes_url}/nakamura_1979_sm_locations.csv'
+        try:
+            response = await requests.get(url)
+            if response.status_code == 200:
+                csv_content = response.content.decode('utf-8')
+                csv_data = []
+                csv_reader = csv.DictReader(csv_content.splitlines())
+                for row in csv_reader:
+                    csv_data.append(row)
+                
+                with open(f'{self._resource_dir}/quakes.json', 'w') as json_file:
+                    json.dump(csv_data, json_file, indent=4)
+                
+                print(f"CSV file downloaded and converted to JSON in '{json_file}'")
+            else:
+                return False
+
+        except Exception as e:
+                return False
