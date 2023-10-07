@@ -1,3 +1,4 @@
+/* Spacecrafts/Moonquakes component styles */
 .topPanel {
     position: absolute;
     display: flex;
@@ -64,3 +65,65 @@ input[type="range"] {
     margin-top: 5%;
     justify-content: space-between;
 }
+
+/* Other Maps Styles */
+
+.container-otherMaps {
+    position: absolute;
+    bottom:5%;
+    left:5%;   
+    z-index: 50;
+}
+
+.otherMaps {
+    position: absolute;
+    display: flex;
+    align-items:flex-start;
+    margin-left: 10%;
+    bottom:3%;
+    left:100%;   
+    z-index: 50;
+}
+
+.container-otherMaps button {
+    background-color: white;
+    border: none;
+    margin: 3%;
+}
+
+.legend-container {
+    position: absolute;
+    display: flex;
+    margin-left: 10%;
+    bottom:140%;
+    left:100%;   
+    z-index: 50;
+}
+
+.legend-hidden {
+    display: none;
+}
+
+/* Other Controls */
+
+.otherControls {
+    position: absolute;
+    bottom:5%;
+    left:90%;   
+    z-index: 50;
+}
+.otherControls button {
+    background: 'transparent';
+    border: 'none';
+    margin-top: '2%';
+    padding: 0
+}
+
+
+
+
+
+
+
+
+

@@ -3,6 +3,7 @@ import './MenuInteraction.css';
 import axios from 'axios';
 import SpaceCrafts from "./SpaceCrafts";
 import Moonquakes from "./Moonquakes";
+import OtherMaps from "./OtherMaps";
 
 class MenuInteraction extends Component {
     constructor(props) {
@@ -11,7 +12,7 @@ class MenuInteraction extends Component {
 
     // function to send of props the data from the filter
     setFilterSpacecraft = async (year, allSpacecrafts) => {
-        
+        console.log(year)
         // clear the globe
         if (!year) {
             this.setState({ 
@@ -29,7 +30,7 @@ class MenuInteraction extends Component {
                 filteredData = response.data
             } else {
                 filteredData = response.data.filter((spacecraft) =>
-                    spacecraft.yearLanding.includes(year)
+                    spacecraft.launchDate.includes(year)
                 );
             }
 
@@ -45,7 +46,7 @@ class MenuInteraction extends Component {
                     Mission: ${point.mission}
                     Lat: ${point.lat}
                     Lng: ${point.lng}
-                    Year: ${point.yearLanding}
+                    Launch Date: ${point.launchDate}
                 `
             }
             
@@ -69,7 +70,7 @@ class MenuInteraction extends Component {
                     // filter by year
                         if(!allYears){
                             filteredData = filteredData.filter((moonquake) => 
-                                moonquake.dateComplete.year.includes(year)
+                                moonquake.date.year.includes(year)
                             );
                         }
             
@@ -103,8 +104,12 @@ class MenuInteraction extends Component {
                 <div className="component">
                     <Moonquakes setFilterMoonquakes={this.setFilterMoonquakes}/>
                 </div>
-
             </div>
+            <OtherMaps
+                    topographicMapEnabled={this.setTopographicMap}
+                    FeOMapEnabled={this.setFeOMap}
+                    switchMap = {this.props.switchMap}
+            />
         </> 
         );
     }
