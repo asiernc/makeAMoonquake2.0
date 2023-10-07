@@ -32,8 +32,9 @@ async def get_moonquakes():
 
 # get_spacecrafts endpoint return a list of spacecrafts
 @app.get("/get_spacecrafts")
-async def get_spacecrafts():
-    return {"message": "sondas"}
+def get_spacecrafts():
+    formatter = Formatter()
+    return formatter.fetch_quakes_data()
 
 # get_demo endpoint return two list of datasets
 @app.get("/get_demo")
@@ -50,14 +51,10 @@ async def get_plots():
     plots = []
     return {'message': plots}
 
-
 # test endpoint return a bool if test passed successfully
 @app.get("/test")
 async def test():
-    formatter = Formatter()
-    
-
-
+    return True
 
 # API INIT
 if __name__ == "__main__":
