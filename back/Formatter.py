@@ -12,14 +12,51 @@ class Formatter():
         self._spacecrafts_list = ['s11', 's12', 's14', 's15', 's16', 's17'] 
         # pds-geosciences.wustl.edu - /lunar/urn-nasa-pds-apollo_pse/data/xa/continuous_waveform/ # MSEED
         self._mseed_url = "https://pds-geosciences.wustl.edu/lunar/urn-nasa-pds-apollo_pse/data/xa/continuous_waveform"
-
+        # Local directory to save formatted resources
         self._resource_dir = "resources"
+
+    # Private func that returns formated date for a given default data_set date
+    def _format_date(self, date):
+        formats = ["%d-%b-%y", "%d %b %Y"]
+
+        for fmt in formats:
+            try:
+                date_obj = datetime.strptime(date, fmt)
+                return {
+                    "year": date_obj.year,
+                    "month": date_obj.month,
+                    "day": date_obj.day
+                }
+            except ValueError:
+                pass
+        return None
+    
+    # Private func that returns formated coordinate for a given default data_set coordinate
+    def _format_coords(self, coord):
+        pos_coord = ['N', 'E']
+        neg_coord = ['S', 'W']
+        if(any(char in coord for char in pos_coord)):
+            mod_coord = coord.replace('N', '')
+            mod_coord = mod_coord.replace('E', '')
+            mod_coord = mod_coord.replace(' ', '')
+            print(mod_coord)
+            return float(mod_coord)
+        elif ((any(char in coord for char in neg_coord))):
+            mod_coord = coord.replace('S', '')
+            mod_coord = mod_coord.replace('W', '')
+            mod_coord = mod_coord.replace(' ', '')
+            return -float(mod_coord)
+
 
     # Private function to download file from url to resource directory
     async def _download_file(self, url, destination):
-        response = await requests.get(url)
-        with open(destination, 'wb') as file:
-            file.write(response.content)
+        try:
+            response = requests.get(url)
+            if response.status_code == 200:
+                with open(destination, 'wb') as file:
+                    file.write(response.content)
+        except Exception as e:
+            print(f"Error: {str(e)}")
 
     # Function that returns a list of available mseed files for a given spacecraft day month and year
     async def get_mseed(self, day, month, year, spacecraft):
@@ -34,8 +71,10 @@ class Formatter():
 
         for i, t in enumerate(['mh1', 'mh2', 'mhz']):
             filename = f'xa.{spacecraft}.00.{t}.{year}.{num_day}.0.mseed'
+            filename_saved = f'{spacecraft}-{t}-{year}-{num_day}.mseed'
             try:
-                await self._download_file(f'{url}/{filename}', f'{self._resource_dir}/{filename}')
+                await self._download_file(f'{url}/{filename}', f'{self._resource_dir}/{filename_saved}')
+                filenames.append(filename_saved)
             except Exception as e:
                 return [e]
         
@@ -63,6 +102,7 @@ class Formatter():
         except Exception as e:
                 return False
         
+    # Function that returns a list of quakes objects
     def filter_quakes_data(self):
         quakes = []
         with open(f'{self._resource_dir}/quakes.json') as json_file:
@@ -84,39 +124,7 @@ class Formatter():
         print(f'Moonquakes: {quakes}')
         return quakes
 
-    def format_date(self, date):
-        formats = ["%d-%b-%y", "%d %b %Y"]
-
-        for fmt in formats:
-            try:
-                date_obj = datetime.strptime(date, fmt)
-                return {
-                    "year": date_obj.year,
-                    "month": date_obj.month,
-                    "day": date_obj.day
-                }
-            except ValueError:
-                pass
-
-        # If none of the formats match, return None or raise an error, depending on your preference
-        return None
-    
-    def format_coords(self, coord):
-        pos_coord = ['N', 'E']
-        neg_coord = ['S', 'W']
-        if(any(char in coord for char in pos_coord)):
-            mod_coord = coord.replace('N', '')
-            mod_coord = mod_coord.replace('E', '')
-            mod_coord = mod_coord.replace(' ', '')
-            print(mod_coord)
-            return float(mod_coord)
-        elif ((any(char in coord for char in neg_coord))):
-            mod_coord = coord.replace('S', '')
-            mod_coord = mod_coord.replace('W', '')
-            mod_coord = mod_coord.replace(' ', '')
-            return -float(mod_coord)
-
-
+    # Function that returns a list of quakes objects
     def fetch_quakes_data(self):
         spacecrafts = []
         with open(f'{self._resource_dir}/spacecrafts.csv', mode="r", newline="") as file:
@@ -124,14 +132,13 @@ class Formatter():
             for row in csv_reader:
                 obj = {
                     'name': f"Apollo s{row['Mission']}",
-                    'lat':  self.format_coords(row['Latitude']),
-                    'lng':  self.format_coords(row['Longitude']),
-                    'launchDate': self.format_date(row['LaunchDate']),
-                    'LandingDate': self.format_date(row['LandingDate']),
+                    'lat':  self._format_coords(row['Latitude']),
+                    'lng':  self._format_coords(row['Longitude']),
+                    'launchDate': self._format_date(row['LaunchDate']),
+                    'LandingDate': self._format_date(row['LandingDate']),
                     'LandingSite': row['LandingSite']
                 }
                 spacecrafts.append(obj)
 
         print(f'Spacecrafts: {spacecrafts}')
-
         return spacecrafts
