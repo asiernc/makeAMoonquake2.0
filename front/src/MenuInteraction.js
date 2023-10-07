@@ -5,10 +5,13 @@ import SpaceCrafts from "./SpaceCrafts";
 import Moonquakes from "./Moonquakes";
 import OtherMaps from "./OtherMaps";
 import OtherControls from './OtherControls.js'
-
+import InfoPanel from './InfoPanel'
 class MenuInteraction extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            showInfoPanel: false,
+        }
     }
 
     // function to send of props the data from the filter
@@ -51,8 +54,7 @@ class MenuInteraction extends Component {
                     Launch Date: ${point.launchDate}
                 `
             }
-            
-            this.props.saveFilteredData(filteredData, pointLabel, undefined)
+            this.props.saveFilteredData(filteredData, pointLabel, undefined, undefined)
             })
         }
 
@@ -91,12 +93,26 @@ class MenuInteraction extends Component {
                         repeatPeriod: (500 + ( - moonquake.magn * 10)),
                         ringColor: 'red',
                     }));
-                
-            this.props.saveFilteredData(undefined, undefined, filteredData)
+
+                    let pointsData = []
+                    filteredData.map((ring)=>{
+                        const point = {
+                            lat: ring.lat,
+                            lng: ring.lng,
+                        }
+                        pointsData.push(point);
+                    })
+
+                    const onPointClick = async (point, event, { lat, lng, altitude }) => {
+                        await this.setState({showInfoPanel: true, selectedInfoPanel: {'lat': lat, 'lng': lng}})
+                    }
+        
+                    this.props.saveFilteredData(pointsData, undefined, onPointClick, filteredData)
             })
         }
         
     render() { 
+        const {selectedInfoPanel, showInfoPanel} = this.state
         return ( 
         <>
             <div className="topPanel">
@@ -116,6 +132,13 @@ class MenuInteraction extends Component {
                 initialPosition={this.props.initialPosition}
                 autoMov={this.props.autoMov}
             />
+            {showInfoPanel?
+                <InfoPanel
+                    data={selectedInfoPanel}            
+                />
+                :
+                <></>
+            }
         </> 
         );
     }

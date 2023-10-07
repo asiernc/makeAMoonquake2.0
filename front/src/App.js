@@ -29,7 +29,6 @@ class App extends Component {
           />, 
 
           <></>,
-
         <MenuInteraction
           saveFilteredData={this.saveFilteredData}
           switchMap={this.switchMap}
@@ -100,13 +99,13 @@ class App extends Component {
 
 
   // function to save the data from the filter
-  saveFilteredData = (pointsData, pointLabel, ringsData) => {
+  saveFilteredData = (pointsData, pointLabel, onPointClick, ringsData) => {
     this.setState({
       globeOptions: {
         pointsData: pointsData,
         pointLabel: pointLabel,
         ringsData: ringsData,
-        
+        onPointClick: onPointClick,
         ringMaxRadius: 'maxR',
         ringPropagationSpeed: 'propSpeed',
         ringRepeatPeriod: 'repeatPeriod',
