@@ -6,8 +6,6 @@ import Library from './Library.js'
 import MainMenu from './MainMenu.js'
 
 
-
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -31,7 +29,7 @@ class App extends Component {
           <></>,
 
         <MenuInteraction
-          setFilteredData={this.saveFilteredData} 
+          saveFilteredData={this.saveFilteredData}
         />, 
 
         <Library 

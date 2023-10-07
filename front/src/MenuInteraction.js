@@ -22,7 +22,7 @@ class MenuInteraction extends Component {
             });
         }
         // get the data from the API
-        await axios.get('http://localhost:8000/get_sondas')
+        await axios.get('http://localhost:8000/get_spacecrafts')
             .then((response) => {
             let filteredData;
             if(allSpacecrafts){
@@ -54,7 +54,6 @@ class MenuInteraction extends Component {
         }
 
         setFilterMoonquakes = async (year, allYears, magnitude, allMagnitudes) => {
-            
             // clear the globe
             if (!year) {
                 this.setState({ 

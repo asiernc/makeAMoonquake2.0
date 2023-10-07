@@ -66,8 +66,8 @@ class Moonquakes extends Component {
                             </label>
                         </div>
                         <div className="control-buttons">
-                            <button onClick={() => {this.props.setFilterMoonquake(year, allYears, magnitude, allMagnitudes)}}>Filter</button>
-                            <button onClick={() => {this.props.setFilterMoonquake({year: 0})}}>Clear</button>
+                            <button onClick={() => {this.props.setFilterMoonquakes(year, allYears, magnitude, allMagnitudes)}}>Filter</button>
+                            <button onClick={() => {this.props.setFilterMoonquakes({year: 0})}}>Clear</button>
                         </div>
                     </div>
 
