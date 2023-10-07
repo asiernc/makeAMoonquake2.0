@@ -81,8 +81,41 @@ class Formatter():
                 }
             }
             quakes.append(obj)
-            print(f'Moonquakes: {obj}')
+        print(f'Moonquakes: {quakes}')
         return quakes
+
+    def format_date(self, date):
+        formats = ["%d-%b-%y", "%d %b %Y"]
+
+        for fmt in formats:
+            try:
+                date_obj = datetime.strptime(date, fmt)
+                return {
+                    "year": date_obj.year,
+                    "month": date_obj.month,
+                    "day": date_obj.day
+                }
+            except ValueError:
+                pass
+
+        # If none of the formats match, return None or raise an error, depending on your preference
+        return None
+    
+    def format_coords(self, coord):
+        pos_coord = ['N', 'E']
+        neg_coord = ['S', 'W']
+        if(any(char in coord for char in pos_coord)):
+            mod_coord = coord.replace('N', '')
+            mod_coord = mod_coord.replace('E', '')
+            mod_coord = mod_coord.replace(' ', '')
+            print(mod_coord)
+            return float(mod_coord)
+        elif ((any(char in coord for char in neg_coord))):
+            mod_coord = coord.replace('S', '')
+            mod_coord = mod_coord.replace('W', '')
+            mod_coord = mod_coord.replace(' ', '')
+            return -float(mod_coord)
+
 
     def fetch_quakes_data(self):
         spacecrafts = []
@@ -91,12 +124,14 @@ class Formatter():
             for row in csv_reader:
                 obj = {
                     'name': f"Apollo s{row['Mission']}",
-                    'lat':  row['Latitude'],
-                    'lng':  row['Longitude'],
-                    'launchDate': row['LaunchDate'],
-                    'LandingDate': row['LandingDate'],
+                    'lat':  self.format_coords(row['Latitude']),
+                    'lng':  self.format_coords(row['Longitude']),
+                    'launchDate': self.format_date(row['LaunchDate']),
+                    'LandingDate': self.format_date(row['LandingDate']),
                     'LandingSite': row['LandingSite']
                 }
                 spacecrafts.append(obj)
-                print(f'Spacecrafts: {obj}')
+
+        print(f'Spacecrafts: {spacecrafts}')
+
         return spacecrafts
