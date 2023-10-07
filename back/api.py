@@ -1,9 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn 
+from Formatter import Formatter
 
 
-# Api configuration
+# API CONFIG
 app = FastAPI()
 origins = ['*']
 app.add_middleware(
@@ -25,7 +26,9 @@ async def main():
 # get_moonquakes endpoint return a list of quakes
 @app.get("/get_moonquakes")
 async def get_moonquakes():
-    return {"message": "quakes"}
+    formatter = Formatter()
+    formatter.fetch_quakes_data()
+    return formatter.filter_quakes_data()
 
 # get_spacecrafts endpoint return a list of spacecrafts
 @app.get("/get_spacecrafts")
@@ -40,10 +43,23 @@ async def get_demo():
 # get_plots endpoint return a plot object in binray format (image/png)
 @app.get("/get_plots")
 async def get_plots():
-    return {"message": "plots"}
+    formatter = Formatter()
+    mseed_files = formatter.get_mseed(17,4,1971,'s12')
+    if (not mseed_files):
+        return {"message": "No data provided"}
+    plots = []
+    return {'message': plots}
+
+
+# test endpoint return a bool if test passed successfully
+@app.get("/test")
+async def test():
+    formatter = Formatter()
+    formatter.fetch_quakes_data()
+    return formatter.filter_quakes_data()
 
 
 
-# API init with uvicorn server
+# API INIT
 if __name__ == "__main__":
     uvicorn.run('api:app', port=8000, reload=True)
