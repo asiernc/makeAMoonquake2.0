@@ -94,7 +94,8 @@ class Formatter():
                     'lat':  row['Latitude'],
                     'lng':  row['Longitude'],
                     'launchDate': row['LaunchDate'],
-                    'LandingDate': row['LandingDate']
+                    'LandingDate': row['LandingDate'],
+                    'LandingSite': row['LandingSite']
                 }
                 spacecrafts.append(obj)
                 print(obj)
