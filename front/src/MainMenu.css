@@ -1,0 +1,21 @@
+.MainMenu {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    gap:3%;
+    z-index: 99;
+    padding: 2%;
+    width: 100%;
+}
+
+.MainMenu button{
+    background-color: rgba(186, 186, 186, 0.5);
+    color: rgba(232, 230, 226, 0.734);
+    font-size: 20px;
+    border-radius: 5px;
+    margin-left: 1%;
+    padding: 10px;
+    &:hover {
+        background-color: #010301a8;
+    }
+}

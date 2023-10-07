@@ -1,0 +1,66 @@
+.topPanel {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 1%;
+    left: 1%;
+    width: 18%;
+    height: 50%;
+    z-index: 99;
+    color: white;
+    padding: 2%;
+}
+
+.component{
+    flex-direction: column;
+    display: flex;
+}
+
+.slider button{
+    background-color: white; 
+    width: 100%;
+    color: black;
+    text-align: left;
+    padding-left: 5%;
+    font-size: 1em; 
+    border: none; 
+
+    &:hover {
+        background-color: #45a049;
+    }
+}
+
+.control-container{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    background-color: #41505b9d ;
+    padding: 5%;
+}
+.input{
+    display: flex;
+    align-items: center;
+    padding: 3%;
+}
+
+input[type="range"] {
+    margin-top: 2%;
+    width: 55%; 
+}
+
+.control-container button {
+    margin: 3%;
+    width: 30%;
+}
+.range-buttons {
+    align-items: start;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.control-buttons{
+    display: flex;
+    flex-direction: row;
+    margin-top: 5%;
+    justify-content: space-between;
+}
