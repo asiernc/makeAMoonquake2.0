@@ -84,9 +84,11 @@ class App extends Component {
     await axios.get("http://localhost:8000/get_demo")
       .then((response) => response.data)
       .then(async (data) => {
-        const {spacecrafts, moonquakes} = data.demo
+        const {spacecrafts, moonquakes} = data
+        console.log(data)
         await this.setState({ui: this.demoMenu})
         await this.setState({globeOptions: {ringsData: moonquakes, pointsData: spacecrafts}})
+        console.log(this.state.globeOptions)
         await animate()
       })
       .catch((error) => {
