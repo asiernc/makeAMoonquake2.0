@@ -34,33 +34,29 @@ class MenuInteraction extends Component {
                 filteredData = response.data
             } else {
                 console.log(response.data)
-                filteredData = response.data.filter((spacecraft) =>
-                    spacecraft.LandingDate.year.includes(year)
-                );
+                filteredData = response.data.filter((spacecraft) => {
+                    return spacecraft.launchDate.year === year
+                })
             }
 
             const pointLabel = (point) => {
                 return `
                     <div style="background-color: '#41505b9d';
-                        position: absolute;
-                        display: flex;
-                        flex-direction: column;
-                        width: 15%"
+                        width: 150%;"
                         font-size:15px>
                     Name: ${point.name}
-                    Mission: ${point.mission}
                     Lat: ${point.lat}
                     Lng: ${point.lng}
-                    Launch Date: ${point.launchDate}
+                    Launch Date: ${point.launchDate.year + '-' + point.launchDate.month + '-' + point.launchDate.day}
                 `
             }
             this.props.saveFilteredData(filteredData, pointLabel, undefined, undefined)
             })
         }
 
-        setFilterMoonquakes = async (year, allYears, magn, allMagnitudes) => {
+        setFilterMoonquakes = async (year, allYears, magnitude, allMagnitudes) => {
             // clear the globe
-            if (!year) {
+            if (!magnitude) {
                 this.setState({ 
                     globeOptions: {
                         ringsData: undefined
@@ -71,20 +67,19 @@ class MenuInteraction extends Component {
             await axios.get('http://localhost:8000/get_moonquakes')
                 .then((response) => {
                     let filteredData = response.data;
+                    console.log(response.data)
                     // filter by year
-                        if(!allYears){
-                            filteredData = filteredData.filter((moonquake) => 
-                                moonquake.date.year.includes(year)
-                            );
+                        if(!allYears) {
+                            filteredData = filteredData.filter((moonquake) => {
+                                return moonquake.date.year === year
+                            });
                         }
-            
                     // filter by magnitude
                         if(!allMagnitudes ) {
-                            filteredData = filteredData.filter((moonquake) => 
-                                moonquake.magn <= magn
-                            );
+                            filteredData = filteredData.filter((moonquake) => {
+                                return moonquake.magn <= magnitude
+                            });
                         }
-
                     // filter by moonquake and add new properties
                     filteredData = filteredData.map((moonquake) => ({
                         ...moonquake,
