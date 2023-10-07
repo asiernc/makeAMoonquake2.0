@@ -37,7 +37,7 @@ class OtherMaps extends Component {
                 <button onClick={() => {this.toggleSliderMaps()}}>Other Maps</button>
                     {this.state.showSliderMaps && (
                         <div className='otherMaps'>
-                            <button onClick={async () => {
+                            <button onClick={() => {
                             this.props.switchMap('moon')
                             }}
                             style={{
@@ -48,7 +48,7 @@ class OtherMaps extends Component {
                         >
                             <img height="38" width="48" src={'icon-moon.jpeg'} alt="icon-topo"/>
                         </button>
-                        <button onClick={async () => {
+                        <button onClick={() => {
                             this.props.switchMap('topoMap')
                             this.showLegend('topo')
                             }}
@@ -60,7 +60,7 @@ class OtherMaps extends Component {
                         >
                             <img height="38" width="48" src={'icon-topo.png'} alt="icon-topo"/>
                         </button>
-                        <button onClick={async () => {
+                        <button onClick={() => {
                             this.props.switchMap('feoMap')
                             this.showLegend('feo')
                             }}

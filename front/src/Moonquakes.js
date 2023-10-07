@@ -49,12 +49,12 @@ class Moonquakes extends Component {
                             <label htmlFor="magnRange">Magn selected: {magnitude}</label>
                             <input 
                                 type="range" 
-                                min="1971" 
-                                max="1976" 
-                                step="1"
+                                min="0" 
+                                max="5" 
+                                step="0.5"
                                 value={magnitude} 
                                 disabled={allMagnitudes}
-                                onChange={(e) => this.setState({year: e.target.value})}
+                                onChange={(e) => this.setState({magnitude: e.target.value})}
                             />
                             <label>
                                 <input 
