@@ -14,6 +14,16 @@ class SpaceCrafts extends Component {
         this.setState({showSlider: !this.state.showSlider}) 
     }
 
+    handleYearChange = (event) => {
+        const selectedYear = event.target.value
+        this.setState({year: selectedYear})
+    }
+
+    handleCheckbox = () => {
+        const {allSpacecrafts} = this.state;
+        this.setState({allSpacecrafts: !allSpacecrafts})
+    }
+
     render() {
         const {year, allSpacecrafts} = this.state
 
@@ -31,14 +41,14 @@ class SpaceCrafts extends Component {
                                 min="1969" 
                                 max="1972" 
                                 value={year} 
-                                onChange={(e) => this.setState({year: e.target.value})}
+                                onChange={this.handleYearChange}
                                 disabled={allSpacecrafts}
                             />
                         <label>
                             <input 
                                 type="checkbox" 
                                 checked={allSpacecrafts} 
-                                onChange={(e) => this.setState({allSpacecrafts: e.target.checked})}
+                                onChange={this.handleCheckbox}
                             />
                             All
                         </label>

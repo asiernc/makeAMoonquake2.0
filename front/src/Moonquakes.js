@@ -7,12 +7,34 @@ class Moonquakes extends Component {
             showSlider: false,
             year: 1971,
             magnitude: 0,
+            allYears: false,
+            allMagnitudes: false,
         }
         
     }
     // function to extends the slider
     toggleSlider = () => { 
         this.setState({showSlider: !this.state.showSlider}) 
+    }
+
+    handleYearChange = (event) => {
+        const selectedYear = event.target.value
+        this.setState({year: selectedYear})
+    }
+
+    handleCheckboxYears = () => {
+        const { allYears } = this.state;
+        this.setState({allYears: !allYears})
+    }
+    
+    handleMagnitudeChange = (event) => {
+        const selectedMagnitude = event.target.value
+        this.setState({magnitude: selectedMagnitude})
+    }
+
+    handleCheckboxMagn = () => {
+        const { allMagnitudes } = this.state;
+        this.setState({allMagnitudes: !allMagnitudes})
     }
 
     render() { 
@@ -33,13 +55,13 @@ class Moonquakes extends Component {
                                 step="1"
                                 value={year}
                                 disabled={allYears}
-                                onChange={(e) => this.setState({year: e.target.value})}
+                                onChange={this.handleYearChange}
                             />
                             <label>
                                 <input 
                                     type="checkbox" 
                                     checked={allYears} 
-                                    onChange={(e) => this.setState({allYears: e.target.checked})}
+                                    onChange={this.handleCheckboxYears}
                                 />
                                 All
                             </label>
@@ -54,20 +76,20 @@ class Moonquakes extends Component {
                                 step="0.5"
                                 value={magnitude} 
                                 disabled={allMagnitudes}
-                                onChange={(e) => this.setState({magnitude: e.target.value})}
+                                onChange={this.handleMagnitudeChange}
                             />
                             <label>
                                 <input 
                                     type="checkbox" 
                                     checked={allMagnitudes} 
-                                    onChange={(e) => this.setState({allMagnitudes: e.target.checked})}
+                                    onChange={this.handleCheckboxMagn}
                                 />
                                 All
                             </label>
                         </div>
                         <div className="control-buttons">
                             <button onClick={() => {this.props.setFilterMoonquakes(year, allYears, magnitude, allMagnitudes)}}>Filter</button>
-                            <button onClick={() => {this.props.setFilterMoonquakes({year: 0})}}>Clear</button>
+                            <button onClick={() => {this.props.setFilterMoonquakes({magnitude: 0})}}>Clear</button>
                         </div>
                     </div>
 
