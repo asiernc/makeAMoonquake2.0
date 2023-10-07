@@ -9,7 +9,7 @@ class Formatter():
         # pds-geosciences.wustl.edu - /lunar/urn-nasa-pds-apollo_seismic_event_catalog/data/ # QUAKES CSV  
         self._quakes_url = "https://pds-geosciences.wustl.edu/lunar/urn-nasa-pds-apollo_seismic_event_catalog/data"
         # https://nssdc.gsfc.nasa.gov/planetary/lunar/apolloland.html # SONDAS DATA
-        self._spacecrafts_url = "https://nssdc.gsfc.nasa.gov/planetary/lunar/apolloland.html"
+        self._spacecrafts_list = ['s11', 's12', 's14', 's15', 's16', 's17'] 
         # pds-geosciences.wustl.edu - /lunar/urn-nasa-pds-apollo_pse/data/xa/continuous_waveform/ # MSEED
         self._mseed_url = "https://pds-geosciences.wustl.edu/lunar/urn-nasa-pds-apollo_pse/data/xa/continuous_waveform"
 
@@ -64,7 +64,7 @@ class Formatter():
                 return False
         
     def filter_quakes_data(self):
-        data = []
+        quakes = []
         with open(f'{self._resource_dir}/quakes.json') as json_file:
             quakes_data = json.load(json_file)
 
@@ -80,26 +80,22 @@ class Formatter():
                     'year': date.year,
                 }
             }
-            data.append(obj)
-        return data
-    
-    async def fetch_spacecrafts_data(self):
-        url = f'{self._quakes_url}/nakamura_1979_sm_locations.csv'
-        try:
-            response = await requests.get(url)
-            if response.status_code == 200:
-                csv_content = response.content.decode('utf-8')
-                csv_data = []
-                csv_reader = csv.DictReader(csv_content.splitlines())
-                for row in csv_reader:
-                    csv_data.append(row)
-                
-                with open(f'{self._resource_dir}/quakes.json', 'w') as json_file:
-                    json.dump(csv_data, json_file, indent=4)
-                
-                print(f"CSV file downloaded and converted to JSON in '{json_file}'")
-            else:
-                return False
+            quakes.append(obj)
+            print(obj)
+        return quakes
 
-        except Exception as e:
-                return False
+    def fetch_quakes_data(self):
+        spacecrafts = []
+        with open(f'{self._resource_dir}/spacecrafts.csv', mode="r", newline="") as file:
+            csv_reader = csv.DictReader(file, delimiter=";")
+            for row in csv_reader:
+                obj = {
+                    'name': f"Apollo s{row['Mission']}",
+                    'lat':  row['Latitude'],
+                    'lng':  row['Longitude'],
+                    'launchDate': row['LaunchDate'],
+                    'LandingDate': row['LandingDate']
+                }
+                spacecrafts.append(obj)
+                print(obj)
+        return spacecrafts

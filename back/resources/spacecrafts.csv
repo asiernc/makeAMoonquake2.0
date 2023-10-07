@@ -1,0 +1,7 @@
+Mission;LaunchDate;LandingDate;LandingSite;Latitude;Longitude;EVAtime(h);Traverse(km);SampleReturn(kg)
+11;16-jul-69;20-jul-69;Mare Tranquilitatis;0.674 N;23.473 E;2.53;0.25;21.55
+12;14-nov-69;19-nov-69;Oceanus Procellarum;3.013 S;23.422 W;7.75;1.35;34.35
+14;31 Jan 1971;5-feb-71;Fra Mauro;3.646 S;17.472 W;9.38;3.45;42.28
+15;26-jul-71;30-jul-71;Hadley Rille;26.132 N;3.633 E;19.13;27.9;77.31
+16;16 Apr 1972;20 Apr 1972;Descartes;8.973 S;15.501 E;20.23;27.;95.71
+17;07 Dec 1972;11 Dec 1972;Taurus-Littrow;20.191 N;30.772 E;22.07;35.;110.52
