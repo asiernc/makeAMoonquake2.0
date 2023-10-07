@@ -4,6 +4,7 @@ import axios from 'axios';
 import SpaceCrafts from "./SpaceCrafts";
 import Moonquakes from "./Moonquakes";
 import OtherMaps from "./OtherMaps";
+import OtherControls from './OtherControls.js'
 
 class MenuInteraction extends Component {
     constructor(props) {
@@ -29,8 +30,9 @@ class MenuInteraction extends Component {
             if(allSpacecrafts){
                 filteredData = response.data
             } else {
+                console.log(response.data)
                 filteredData = response.data.filter((spacecraft) =>
-                    spacecraft.launchDate.includes(year)
+                    spacecraft.LandingDate.year.includes(year)
                 );
             }
 
@@ -54,7 +56,7 @@ class MenuInteraction extends Component {
             })
         }
 
-        setFilterMoonquakes = async (year, allYears, magnitude, allMagnitudes) => {
+        setFilterMoonquakes = async (year, allYears, magn, allMagnitudes) => {
             // clear the globe
             if (!year) {
                 this.setState({ 
@@ -77,7 +79,7 @@ class MenuInteraction extends Component {
                     // filter by magnitude
                         if(!allMagnitudes ) {
                             filteredData = filteredData.filter((moonquake) => 
-                                moonquake.magn <= magnitude
+                                moonquake.magn <= magn
                             );
                         }
 
@@ -106,9 +108,13 @@ class MenuInteraction extends Component {
                 </div>
             </div>
             <OtherMaps
-                    topographicMapEnabled={this.setTopographicMap}
-                    FeOMapEnabled={this.setFeOMap}
-                    switchMap = {this.props.switchMap}
+                topographicMapEnabled={this.setTopographicMap}
+                FeOMapEnabled={this.setFeOMap}
+                switchMap = {this.props.switchMap}
+            />
+            <OtherControls
+                initialPosition={this.props.initialPosition}
+                autoMov={this.props.autoMov}
             />
         </> 
         );

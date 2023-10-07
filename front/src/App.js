@@ -33,6 +33,8 @@ class App extends Component {
         <MenuInteraction
           saveFilteredData={this.saveFilteredData}
           switchMap={this.switchMap}
+          initialPosition = {this.globeRef}
+          autoMov={this.globeRef}
         />, 
 
         <Library 

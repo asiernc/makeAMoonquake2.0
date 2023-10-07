@@ -30,7 +30,7 @@ class SpaceCrafts extends Component {
                                 type="range" 
                                 min="1969" 
                                 max="1972" 
-                                value={this.state.year} 
+                                value={year} 
                                 onChange={(e) => this.setState({year: e.target.value})}
                                 disabled={allSpacecrafts}
                             />
