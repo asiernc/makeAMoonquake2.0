@@ -81,7 +81,7 @@ class Formatter():
                 }
             }
             quakes.append(obj)
-            print(obj)
+            print(f'Moonquakes: {obj}')
         return quakes
 
     def fetch_quakes_data(self):
@@ -98,5 +98,5 @@ class Formatter():
                     'LandingSite': row['LandingSite']
                 }
                 spacecrafts.append(obj)
-                print(obj)
+                print(f'Spacecrafts: {obj}')
         return spacecrafts
