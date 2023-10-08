@@ -13,6 +13,7 @@ class MainMenu extends Component {
                     <button onClick={() => this.props.changeUI(1)}>TOUR</button>
                     <button onClick={() => this.props.changeUI(2)}>INTERACTION</button>
                     <button onClick={this.props.doGit}>DOCUMENTATION</button>
+                    <button onClick={()=>this.props.test()}>TEST BUTTON</button>
                 </div>
             </>
         );

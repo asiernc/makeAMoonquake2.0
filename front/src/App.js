@@ -5,7 +5,7 @@ import './App.css';
 import MenuInteraction from './MenuInteraction.js'
 import Library from './Library.js'
 import MainMenu from './MainMenu.js'
-
+import Plotter from './Plotter';
 
 class App extends Component {
   constructor(props) {
@@ -22,10 +22,12 @@ class App extends Component {
           ui: undefined
       }
       this.globeRef = React.createRef(); 
-
+      this.test = <Plotter></Plotter>
       this.UIs = [
         <MainMenu
           changeUI={this.changeUI}
+          doGit={() => this.doGit()}
+          test={()=>this.setState({ui:this.test})}
           />, 
 
           <></>,

@@ -8,84 +8,77 @@ class Plotter extends Component {
 
     this.state = {
       frames: [],
-      animationInterval: 1000, // in milliseconds
+      animationInterval: 1000,
       currentFrame: 0,
+      data: []
     };
   }
 
-  componentDidMount() {
-    this.fetchData();
-    this.generateFrames();
-    this.startAnimation();
+  componentDidMount = async () => {
+    await this.setState({plotLayout: {
+        showlegend: false,
+        width: 850,
+        height: 500,
+        plot_bgcolor: 'rgba(0, 0, 0, 0)',
+        paper_bgcolor: 'rgba(0, 0, 0, 0)',
+    }})
+    await this.fetchData();
   }
 
   fetchData = async () => {
+    const {data} = this.state;
     const body = {
-        'date': new String('1971-4-17'),
+        'date': new String('1973-2-11'),
         'spacecraft': new String('12')
     };
     const url = 'http://localhost:8000/get_plots'
     await axios.post(url, body, {headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
-        .then(async (response) => {
-            const data = response.data;
-            await this.setState({x: data.x, y: data.y})
+        .then((response) => {
+            if (response.status !== 200) {
+                throw new Error('Request failed with status ' + response.status);
+            }
+            return response.data;
+        })
+        .then(async (csvData) => {
+            const lines = csvData.split('\n');
+            console.log(lines.length)
+            let x = [];
+            let y = [];
+        
+            for (let i = 1; i < lines.length; i++) {
+                const parts = lines[i].split(',');
+                if (parts.length === 2) {
+                    x = parts[0] // "1971-04-17 00:00:00.349000"
+                    y = parts[1] == -1 ? NaN : parts[1] // "521\r"
+                }
+                data.push({x:x, y:y});
+            }
+            await this.setState({data: data, dataSaved: true})
         })
         .catch((error) => {
             console.error('Error:', error);
         });
   }
 
-  generateFrames = () => {
-    const { x, y } = this.state;
-    const frames = [];
-
-    for (let i = 1; i <= x.length; i++) {
-      frames.push({
-        data: [
-          {
-            x: x.slice(0, i),
-            y: y.slice(0, i),
-            fill: 'tozeroy',
-            type: 'scatter',
-            mode: 'lines',
-            line: { color: 'green' },
-          },
-        ],
-        name: `Frame ${i}`,
-      });
-    }
-
-    this.setState({ frames });
-  };
-
-  startAnimation = () => {
-    setInterval(() => {
-      const { frames, currentFrame } = this.state;
-      const nextFrame = (currentFrame + 1) % frames.length;
-      this.setState({ currentFrame: nextFrame });
-    }, this.state.animationInterval);
-  };
-
   render() {
-    const { frames, currentFrame } = this.state;
-
-    return (
-      <div>
-        <Plot
-          data={frames[currentFrame].data}
-          layout={{
-            title: 'Filled-Area Animation',
-            xaxis: {
-              title: 'X-Axis',
-            },
-            yaxis: {
-              title: 'Y-Axis',
-            },
-          }}
-          frames={frames}
-          config={{ displayModeBar: false }}
-        />
-      </div>
+    const { dataSaved, frames, data, plotLayout } = this.state;
+    return (<>
+        {
+        dataSaved?
+            <div className='PlotPanel'>
+                <Plot
+                    data={[{
+                        x: data.map((item) => new Date(item.x)),
+                        y: data.map((item) => item.y),
+                    }]} 
+                    layout={plotLayout}
+                    frames={frames}
+                    config={{ displayModeBar: false }}
+                />
+            </div>:
+            <></>
+        }   
+    </>
     );
   }
 }
