@@ -23,22 +23,11 @@
 <details>
   <summary>Table of Contents</summary>
   <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
+    <li><a href="#about-the-project">About The Project</a></li>
+    <li><a href="#getting-started">Getting Started</a></li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#resources">Resources</a></li>
+    <li><a href="#contributing">Contributing</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
@@ -211,6 +200,9 @@ Project Link: [https://github.com/asiernc/makeAMoonquake2.0](https://github.com/
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-Many thanks to the NASA for the opportunity and many many thanks to the Málaga SpaceApps Challenge organizers and Málaga 42 staff.
+Many thanks to the NASA for the opportunity and the data.
+Many many thanks to the Málaga SpaceApps Challenge organizers and Málaga 42 staff.
 
-Se you soon!
+And thank you very much for taking the time to learn about our mission.
+
+Se you soon astrohacker!
