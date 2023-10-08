@@ -189,7 +189,7 @@ We will review ASAP!
 
 Genís Martínez Moreno - [@fenixg98](https://github.com/fenixG98) - fenixg98@icloud.com
 
-Genís Martínez Moreno - [@asiernc](https://github.com/asiernc) - asierncara@gmail.com
+Asier Novio Cara - [@asiernc](https://github.com/asiernc) - asierncara@gmail.com
 
 
 Project Link: [https://github.com/asiernc/makeAMoonquake2.0](https://github.com/asiernc/makeAMoonquake2.0)
