@@ -154,6 +154,7 @@ Now you can navigate to _http://localhost:3000_ to start your journey into the m
 - [x] Add moon controls
 - [x] Link interactive data with extended data
 - [x] Add surface layers
+- [ ] Eficiency fetching data
 - [ ] Add Additional visual data
 - [ ] Add a Moon Phases layer and controls
 - [ ] Add VR mode!
