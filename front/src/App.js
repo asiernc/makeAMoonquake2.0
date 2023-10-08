@@ -26,18 +26,8 @@ class App extends Component {
       this.UIs = [
         <MainMenu
           changeUI={this.changeUI}
-<<<<<<< HEAD
-<<<<<<< HEAD
           doGit={() => this.doGit()}
           test={()=>this.setState({ui:this.test})}
-=======
->>>>>>> 87656f85 (fix filters)
-=======
-=======
-          doGit={() => this.doGit()}
-          test={()=>this.setState({ui:this.test})}
->>>>>>> 6933eaac (plotter react interactive OK)
->>>>>>> 3d424dec (plotter react interactive OK)
           />, 
 
           <></>,
