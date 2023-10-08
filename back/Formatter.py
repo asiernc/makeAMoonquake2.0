@@ -3,6 +3,9 @@ from datetime import datetime, timedelta
 import os
 import csv
 import json
+from obspy import read
+import numpy as np
+
 class Formatter():
 
     def __init__(self):
@@ -79,6 +82,18 @@ class Formatter():
                 return [e]
         
         return filenames
+
+    def get_plot_data (self, files):
+        data = []
+        for file in files:
+            st = read(f'{self._resource_dir}/{file}')
+            tr = st[0]
+            relative_times = tr.times()
+            starttime = tr.stats.starttime
+            x = [(starttime + t).datetime for t in relative_times]
+            y = tr.data.tolist()
+            data.append({"x": x, "y": y})
+        return data[0]
     
     # Function that returns True if quakes.csv is downloaded and saved as json file succesfully
     async def fetch_quakes_data(self):

@@ -2,10 +2,7 @@ from fastapi import FastAPI, Form
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn 
 from Formatter import Formatter
-from Plotter import Plotter
-from starlette.responses import Response
 from datetime import datetime
-import base64
 
 # API CONFIG
 app = FastAPI()
@@ -51,24 +48,12 @@ def get_demo():
 @app.post("/get_plots")
 async def get_plots(date: str = Form(...), spacecraft: str = Form(...)):
     formatter = Formatter()
-    plotter = Plotter()
     date_obj = datetime.strptime(date, "%Y-%m-%d")
     mseed_files = await formatter.get_mseed(date_obj.day, date_obj.month, date_obj.year,f's{spacecraft}')
     if (not mseed_files):
         return {"message": "No data provided"}
-    try:
-        plot = plotter.do_plot(mseed_files)
-        try:
-            if(base64.b64encode(base64.b64decode(plot))) == plot:
-                print('Base 64 encoded')
-            else:
-                print('Not base64 encoded')
-        except Exception:
-            print(' Invalid format')
-
-        return Response(content=plot, media_type="image/png")
-    except Exception as e:
-        return Response(content=str(e), status_code=500)
+    plot_data = formatter.get_plot_data(mseed_files)
+    return plot_data
 
 # test endpoint return a bool if test passed successfully
 @app.get("/test")

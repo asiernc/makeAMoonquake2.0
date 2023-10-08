@@ -29,6 +29,7 @@ class Plotter:
 		st = read(f'resources/{data[1]}')
 		f'resources/{data[1]}'
 		tr = st[0]
+		print(tr.data)
 		tr.data = tr.data.astype(np.float64)
 		tr.data[tr.data == -1] = np.nan
 		ax2.locator_params(nbins=3)
