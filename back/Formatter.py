@@ -16,7 +16,8 @@ class Formatter():
         # pds-geosciences.wustl.edu - /lunar/urn-nasa-pds-apollo_pse/data/xa/continuous_waveform/ # MSEED
         self._mseed_url = "https://pds-geosciences.wustl.edu/lunar/urn-nasa-pds-apollo_pse/data/xa/continuous_waveform"
         # Local directory to save formatted resources
-        self._resource_dir = "/Volumes/dades/resources"
+        self._resource_dir = "/Volumes/data/resources"
+
     # Private func that returns formated date for a given default data_set date
     def _format_date(self, date):
         formats = ["%d-%b-%y", "%d %b %Y"]
