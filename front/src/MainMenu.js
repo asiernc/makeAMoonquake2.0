@@ -12,7 +12,6 @@ class MainMenu extends Component {
                     {/* four buttons for the first menu, demo, interaction, library, github function switch value*/}
                     <button onClick={() => this.props.changeUI(1)}>TOUR</button>
                     <button onClick={() => this.props.changeUI(2)}>INTERACTION</button>
-                    <button onClick={() => this.props.changeUI(3)}>LIBRARY DATA</button>
                     <button onClick={this.props.doGit}>DOCUMENTATION</button>
                 </div>
             </>

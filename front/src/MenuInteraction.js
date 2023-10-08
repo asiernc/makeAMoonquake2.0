@@ -90,12 +90,12 @@ class MenuInteraction extends Component {
                     }));
 
                     let pointsData = []
-                    filteredData.map((ring)=>{
+                    filteredData.map((ring) => {
                         const point = {
                             lat: ring.lat,
                             lng: ring.lng,
                         }
-                        pointsData.push(point);
+                        return pointsData.push(point);
                     })
 
                     const onPointClick = async (point, event, { lat, lng, altitude }) => {
@@ -111,6 +111,10 @@ class MenuInteraction extends Component {
         return ( 
         <>
             <div className="topPanel">
+                <button onClick={() => this.props.changeUI(0)}
+                style={{marginBottom:'5%', width:'40%', height:'7%'}}>
+                    BACK
+                </button>
                 <div className="component">
                     <SpaceCrafts setFilterSpacecraft={this.setFilterSpacecraft}/>
                 </div>
