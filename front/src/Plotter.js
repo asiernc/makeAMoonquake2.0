@@ -10,25 +10,18 @@ class Plotter extends Component {
       frames: [],
       animationInterval: 1000,
       currentFrame: 0,
-      data: []
     };
   }
 
   componentDidMount = async () => {
     await this.setState({plotLayout: {
         showlegend: false,
-        width: 850,
-        height: 500,
         plot_bgcolor: 'rgba(0, 0, 0, 0)',
         paper_bgcolor: 'rgba(0, 0, 0, 0)',
+        data: []
     }})
-    await this.fetchData();
-  }
-
-  fetchData = async () => {
-    const {data} = this.state;
     const body = {
-        'date': new String('1973-2-11'),
+        'date': new String('1971-4-17'),
         'spacecraft': new String('12')
     };
     const url = 'http://localhost:8000/get_plots'
@@ -41,19 +34,20 @@ class Plotter extends Component {
         })
         .then(async (csvData) => {
             const lines = csvData.split('\n');
-            console.log(lines.length)
             let x = [];
             let y = [];
-        
+            let dataset = []
             for (let i = 1; i < lines.length; i++) {
                 const parts = lines[i].split(',');
                 if (parts.length === 2) {
                     x = parts[0] // "1971-04-17 00:00:00.349000"
-                    y = parts[1] == -1 ? NaN : parts[1] // "521\r"
+                    y = parts[1] // "521\r"
+                    if (y == -1) y = ''
                 }
-                data.push({x:x, y:y});
+                dataset.push({x:x, y:y});
             }
-            await this.setState({data: data, dataSaved: true})
+            console.log(dataset)
+            await this.setState({data: dataset, dataSaved: true})
         })
         .catch((error) => {
             console.error('Error:', error);
@@ -61,23 +55,27 @@ class Plotter extends Component {
   }
 
   render() {
-    const { dataSaved, frames, data, plotLayout } = this.state;
-    return (<>
-        {
-        dataSaved?
-            <div className='PlotPanel'>
-                <Plot
-                    data={[{
+    const { dataSaved, data, plotLayout } = this.state;
+    return (
+    <>
+        {dataSaved? 
+        <>
+            <div className="PlotContainer">
+                Ploted .mseed data from Apollo Seismic Waveform Data from NASA’s Planetary Data System (PDS).
+                
+                <div className='Plot'><Plot
+                    data = {[{
                         x: data.map((item) => new Date(item.x)),
                         y: data.map((item) => item.y),
-                    }]} 
+                    }]}
                     layout={plotLayout}
-                    frames={frames}
                     config={{ displayModeBar: false }}
-                />
-            </div>:
-            <></>
-        }   
+                /></div>
+            </div>
+        </>:
+            <><div className="PlotContainer">
+            Wait please. Loading data...
+        </div></>}
     </>
     );
   }

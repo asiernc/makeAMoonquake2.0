@@ -118,22 +118,3 @@ input[type="range"] {
     margin-top: '2%';
     padding: 0
 }
-
-
-/* Info Panel */
-
-.InfoPanel {
-    position: absolute;
-    top: 5%;
-    left: 75%;
-    z-index: 99;
-    width: 18%;
-    color: white;
-    padding: 2%;
-    width: 20%;
-    background-color: #41505b9d ;
-}
-.InfoPanel p {
-    text-align: center;
-    
-}

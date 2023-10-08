@@ -53,12 +53,12 @@ async def get_plots(date: str = Form(...), spacecraft: str = Form(...)):
     date_obj = datetime.strptime(date, "%Y-%m-%d")
     # OBTENER DATOS ON LINE
     # mseed_files = await formatter.get_mseed(date_obj.day, date_obj.month, date_obj.year,f's{spacecraft}')
-    mseed_files = formatter.get_mseed_test(date_obj.day, date_obj.month, date_obj.year,f's{spacecraft}')
-    if (not mseed_files):
+    mseed_file = formatter.get_mseed_test(date_obj.day, date_obj.month, date_obj.year,f's{spacecraft}')
+    if (not mseed_file):
         return {"message": "No data provided"}
-    files = formatter.get_plot_data(mseed_files)
+    file = formatter.get_plot_data(mseed_file)
     try:
-        response = FileResponse(files, media_type="text/csv")
+        response = FileResponse(file, media_type="text/csv")
         response.headers["Content-Disposition"] = "attachment; filename=downloaded_file.csv"
         return response
 

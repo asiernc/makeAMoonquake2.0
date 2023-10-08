@@ -29,7 +29,6 @@ class App extends Component {
           doGit={() => this.doGit()}
           test={()=>this.setState({ui:this.test})}
           />, 
-
           <></>,
         <MenuInteraction
           saveFilteredData={this.saveFilteredData}
