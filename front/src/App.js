@@ -5,6 +5,7 @@ import './App.css';
 import MenuInteraction from './MenuInteraction.js'
 import Library from './Library.js'
 import MainMenu from './MainMenu.js'
+import * as THREE from 'three';
 
 
 class App extends Component {
@@ -18,18 +19,27 @@ class App extends Component {
             atmosphereColor: 'white',
             atmosphereAltitude: 0.1,
             backgroundImageUrl: '8k_stars_milky_way.jpg',
-          },
+            lightSources: [
+              {
+                type: 'DirectionalLight',
+                color: 0xffffff,  // Color de la luz
+                intensity: 1,    // Intensidad de la luz
+                position: [1, 1, 1],  // Ajusta la posición de la luz según tu necesidad
+              },
+            ],
           ui: undefined
       }
+    }
       this.globeRef = React.createRef(); 
 
       this.UIs = [
         <MainMenu
           changeUI={this.changeUI}
           />, 
-
+          
           <></>,
         <MenuInteraction
+          changeUI={this.changeUI}  
           saveFilteredData={this.saveFilteredData}
           switchMap={this.switchMap}
           initialPosition = {this.globeRef}
@@ -40,8 +50,11 @@ class App extends Component {
         
         />, 
       
-      ]
+      ];
+
+
   }
+
   componentDidMount = () => this.setState({ui : this.UIs[0]})
   
   // change for switch function, 
@@ -123,7 +136,7 @@ class App extends Component {
           }
         })
   }
-
+  
 
   render () {
     const { ui, globeOptions } = this.state
@@ -134,7 +147,7 @@ class App extends Component {
           {ui}
         </div>
         <div className='Globe'>
-          <Globe ref={globeRef} {...globeOptions}/>
+          <Globe ref={globeRef} {...globeOptions} />
         </div>
       </>
     );
