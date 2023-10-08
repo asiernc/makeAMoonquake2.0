@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import Plotter from "./Plotter";
 
 class InfoPanel extends Component {
     constructor(props) {
@@ -9,16 +10,14 @@ class InfoPanel extends Component {
 
     }
     render() { 
-        const {data} = this.props;
+
         return ( 
             <div className="InfoPanel">
                 <p>Data library</p>
-                {data.lat}
-                <br></br>
-                {data.lng}
+                <Plotter />
             </div>
-         );
+        );
     }
 }
- 
+
 export default InfoPanel;

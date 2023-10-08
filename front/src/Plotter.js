@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Plot from 'react-plotly.js';
+import axios from 'axios';
 
 class Plotter extends Component {
   constructor(props) {
