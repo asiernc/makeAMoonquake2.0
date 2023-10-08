@@ -5,8 +5,12 @@ import './App.css';
 import MenuInteraction from './MenuInteraction.js'
 import Library from './Library.js'
 import MainMenu from './MainMenu.js'
+<<<<<<< HEAD
 import * as THREE from 'three';
 
+=======
+import Plotter from './Plotter';
+>>>>>>> origin
 
 class App extends Component {
   constructor(props) {
@@ -31,10 +35,11 @@ class App extends Component {
       }
     }
       this.globeRef = React.createRef(); 
-
+      this.test = <Plotter></Plotter>
       this.UIs = [
         <MainMenu
           changeUI={this.changeUI}
+          doGit={() => this.doGit()}
           />, 
           
           <></>,

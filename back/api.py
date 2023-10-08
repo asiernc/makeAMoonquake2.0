@@ -1,8 +1,10 @@
-from fastapi import FastAPI, Form
+from fastapi import FastAPI, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 import uvicorn 
 from Formatter import Formatter
 from datetime import datetime
+import pandas as pd
 
 # API CONFIG
 app = FastAPI()
@@ -49,11 +51,19 @@ def get_demo():
 async def get_plots(date: str = Form(...), spacecraft: str = Form(...)):
     formatter = Formatter()
     date_obj = datetime.strptime(date, "%Y-%m-%d")
-    mseed_files = await formatter.get_mseed(date_obj.day, date_obj.month, date_obj.year,f's{spacecraft}')
-    if (not mseed_files):
+    # OBTENER DATOS ON LINE
+    # mseed_files = await formatter.get_mseed(date_obj.day, date_obj.month, date_obj.year,f's{spacecraft}')
+    mseed_file = formatter.get_mseed_test(date_obj.day, date_obj.month, date_obj.year,f's{spacecraft}')
+    if (not mseed_file):
         return {"message": "No data provided"}
-    plot_data = formatter.get_plot_data(mseed_files)
-    return plot_data
+    file = formatter.get_plot_data(mseed_file)
+    try:
+        response = FileResponse(file, media_type="text/csv")
+        response.headers["Content-Disposition"] = "attachment; filename=downloaded_file.csv"
+        return response
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 # test endpoint return a bool if test passed successfully
 @app.get("/test")

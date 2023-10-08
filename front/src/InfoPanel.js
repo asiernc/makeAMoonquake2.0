@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import Plotter from "./Plotter";
+import './infopanel.css'
 
 class InfoPanel extends Component {
     constructor(props) {
@@ -10,11 +11,14 @@ class InfoPanel extends Component {
 
     }
     render() { 
-
+        const {data} = this.props;
         return ( 
             <div className="InfoPanel">
-                <p>Data library</p>
-                <Plotter />
+                <div className="Title"><h2>Data library</h2></div>
+                <div className="Data">
+                    <Plotter/>
+                </div>
+                
             </div>
         );
     }

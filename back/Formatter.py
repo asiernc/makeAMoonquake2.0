@@ -16,12 +16,11 @@ class Formatter():
         # pds-geosciences.wustl.edu - /lunar/urn-nasa-pds-apollo_pse/data/xa/continuous_waveform/ # MSEED
         self._mseed_url = "https://pds-geosciences.wustl.edu/lunar/urn-nasa-pds-apollo_pse/data/xa/continuous_waveform"
         # Local directory to save formatted resources
-        self._resource_dir = "resources"
+        self._resource_dir = "/Volumes/data/resources"
 
     # Private func that returns formated date for a given default data_set date
     def _format_date(self, date):
         formats = ["%d-%b-%y", "%d %b %Y"]
-
         for fmt in formats:
             try:
                 date_obj = datetime.strptime(date, fmt)
@@ -82,18 +81,32 @@ class Formatter():
                 return [e]
         
         return filenames
+    
+    def get_mseed_test(self, day, month, year, spacecraft):
+        if not os.path.exists(self._resource_dir):
+            os.makedirs(self._resource_dir)
 
-    def get_plot_data (self, files):
-        data = []
-        for file in files:
-            st = read(f'{self._resource_dir}/{file}')
-            tr = st[0]
-            relative_times = tr.times()
-            starttime = tr.stats.starttime
-            x = [(starttime + t).datetime for t in relative_times]
-            y = tr.data.tolist()
-            data.append({"x": x, "y": y})
-        return data[0]
+        parsed_day = datetime.strptime(f'{day}/{month}', "%d/%m").timetuple().tm_yday
+        num_day = str(parsed_day).zfill(3)
+        filename_saved = f'{spacecraft}-mh1-{year}-{num_day}.mseed'
+        return filename_saved
+
+    def get_plot_data (self, file):
+        st = read(f'{self._resource_dir}/{file}')
+        tr = st[0]
+        relative_times = tr.times()
+        starttime = tr.stats.starttime
+        x = [(starttime + t).datetime for t in relative_times]
+        y = tr.data.tolist()
+        data = {"x": x, "y": y}
+        filename = f'{self._resource_dir}/{file}'.replace('.mseed', '')
+        with open(f'{filename}.csv', "w", newline="") as csv_file:
+            csv_writer = csv.writer(csv_file)
+            csv_writer.writerow(["x", "y"])
+            for i in range(len(data['x'])):
+                if (i%2500==0):
+                    csv_writer.writerow([data['x'][i], data['y'][i]])
+        return f'{filename}.csv'
     
     # Function that returns True if quakes.csv is downloaded and saved as json file succesfully
     async def fetch_quakes_data(self):

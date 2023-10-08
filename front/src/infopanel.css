@@ -1,0 +1,41 @@
+.InfoPanel {
+    position: absolute;
+    top: 3%;
+    left: 50%;
+    z-index: 99;
+    width: 45%;
+    color: white;
+    padding: 2%;
+    background-color: #41505b9d ;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.Title {
+    size: 25px;
+    flex: 2%;
+    justify-content: top;
+    position: relative;
+    text-align: center;
+}
+
+.Data {
+    display: flex;
+    flex: 98%;
+    position: relative;
+    flex-direction: column;
+}
+
+.Plot{
+    display: flex;
+    flex: 1;
+    position: relative;
+    justify-content: center;
+    text-align: center;
+}
+
+.PlotConatiner {
+    display: flex;
+    position: relative;
+}

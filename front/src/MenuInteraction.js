@@ -105,6 +105,7 @@ class MenuInteraction extends Component {
                     })
 
                     const onPointClick = async (point, event, { lat, lng, altitude }) => {
+                        console.log(point)
                         await this.setState({showInfoPanel: true, selectedInfoPanel: {'lat': lat, 'lng': lng}})
                     }
         
