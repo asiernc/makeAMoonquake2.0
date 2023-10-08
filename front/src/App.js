@@ -27,7 +27,6 @@ class App extends Component {
         <MainMenu
           changeUI={this.changeUI}
           doGit={() => this.doGit()}
-          test={()=>this.setState({ui:this.test})}
           />, 
           <></>,
         <MenuInteraction
