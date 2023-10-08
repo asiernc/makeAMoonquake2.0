@@ -45,7 +45,7 @@ def get_spacecrafts():
 def get_demo():
     spacecrafts = get_spacecrafts()
     quakes = get_moonquakes()
-    return [{'spacecrafts': spacecrafts}, {'quakes': quakes}]
+    return {'spacecrafts': spacecrafts, 'quakes': quakes}
 
 # get_plots endpoint return a plot object in binray format (image/png)
 @app.post("/get_plots")
