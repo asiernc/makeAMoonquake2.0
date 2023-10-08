@@ -3,6 +3,7 @@ import Globe from 'react-globe.gl'
 import axios from 'axios'
 import './App.css';
 import MenuInteraction from './MenuInteraction.js'
+import Library from './Library.js'
 import MainMenu from './MainMenu.js'
 
 
@@ -25,17 +26,20 @@ class App extends Component {
       this.UIs = [
         <MainMenu
           changeUI={this.changeUI}
-          doGit={() => this.doGit()}
           />, 
 
           <></>,
         <MenuInteraction
-          changeUI={this.changeUI}
           saveFilteredData={this.saveFilteredData}
           switchMap={this.switchMap}
           initialPosition = {this.globeRef}
           autoMov={this.globeRef}
-        />
+        />, 
+
+        <Library 
+        
+        />, 
+      
       ]
   }
   componentDidMount = () => this.setState({ui : this.UIs[0]})
@@ -48,9 +52,8 @@ class App extends Component {
     this.setState({ui: this.UIs[index]})}
   
   // Open Github 
-  doGit = () => {
-    window.open('https://github.com/asiernc/makeAMoonquake2.0', "_blank", "noreferrer") 
-  }
+  doGit = () => window.open('urlgithub') 
+
 
   // function to show a short preview of the app
 
@@ -70,8 +73,7 @@ class App extends Component {
           setTimeout(async() => { 
             this.globeRef.current.controls().autoRotate = false;
             this.globeRef.current.pointOfView({ altitude: 2.5 }, 1500);
-            this.setState({globeOptions:{pointsData: undefined, ringsData: undefined}})
-            this.changeUI(0)
+            this.insertStartMenu()
           }, 
           7500);
         }, 
@@ -81,10 +83,12 @@ class App extends Component {
     }
 
     await axios.get("http://localhost:8000/get_demo")
-      .then(async (response) => {
-        const {spacecrafts, quakes} = response.data
-        console.log(response.data[0])
-        await this.setState({globeOptions: {ringsData: quakes, pointsData: spacecrafts}})
+      .then((response) => response.data)
+      .then(async (data) => {
+        const {spacecrafts, moonquakes} = data
+        console.log(data)
+        await this.setState({ui: this.demoMenu})
+        await this.setState({globeOptions: {ringsData: moonquakes, pointsData: spacecrafts}})
         console.log(this.state.globeOptions)
         await animate()
       })

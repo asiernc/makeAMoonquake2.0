@@ -27,32 +27,34 @@ class MenuInteraction extends Component {
             });
         }
         // get the data from the API
-        await axios.get('http://localhost:8000/get_spacecrafts')
-            .then((response) => {
+            const response = await axios.get('http://localhost:8000/get_spacecrafts');
+            const data = response.data; // Aquí obtienes los datos de la API
+            console.log(data); // Agrega esta línea para verificar los datos
+        
             let filteredData;
-            if(allSpacecrafts){
-                filteredData = response.data
+            if (allSpacecrafts) {
+                filteredData = data;
             } else {
-                console.log(response.data)
-                filteredData = response.data.filter((spacecraft) => {
-                    return spacecraft.launchDate.year === year
-                })
+                console.log(year, data)
+                filteredData = data.filter((spacecraft) => {
+                return spacecraft.launchDate.year == year;
+                });
             }
-
+            console.log(filteredData);
             const pointLabel = (point) => {
-                return `
-                    <div style="background-color: '#41505b9d';
-                        width: 150%;"
-                        font-size:15px>
-                    Name: ${point.name}
-                    Lat: ${point.lat}
-                    Lng: ${point.lng}
-                    Launch Date: ${point.launchDate.year + '-' + point.launchDate.month + '-' + point.launchDate.day}
-                `
-            }
-            this.props.saveFilteredData(filteredData, pointLabel, undefined, undefined)
-            })
-        }
+            return `
+                <div style="background-color: '#41505b9d';
+                    width: 150%;"
+                    font-size: 15px;">
+                Name: ${point.name}
+                Lat: ${point.lat}
+                Lng: ${point.lng}
+                Launch Date: ${point.launchDate.year + '-' + point.launchDate.month + '-' + point.launchDate.day}
+                `;
+            };
+            this.props.saveFilteredData(filteredData, pointLabel, undefined, undefined);
+        
+    }
 
         setFilterMoonquakes = async (year, allYears, magnitude, allMagnitudes) => {
             // clear the globe
@@ -71,7 +73,7 @@ class MenuInteraction extends Component {
                     // filter by year
                         if(!allYears) {
                             filteredData = filteredData.filter((moonquake) => {
-                                return moonquake.date.year === year
+                                return moonquake.date.year == year
                             });
                         }
                     // filter by magnitude
@@ -95,7 +97,7 @@ class MenuInteraction extends Component {
                             lat: ring.lat,
                             lng: ring.lng,
                         }
-                        return pointsData.push(point);
+                        pointsData.push(point);
                     })
 
                     const onPointClick = async (point, event, { lat, lng, altitude }) => {
