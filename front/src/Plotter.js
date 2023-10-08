@@ -28,7 +28,7 @@ class Plotter extends Component {
   fetchData = async () => {
     const {data} = this.state;
     const body = {
-        'date': new String('1971-4-17'),
+        'date': new String('1973-2-11'),
         'spacecraft': new String('12')
     };
     const url = 'http://localhost:8000/get_plots'
