@@ -26,8 +26,11 @@ class App extends Component {
       this.UIs = [
         <MainMenu
           changeUI={this.changeUI}
+<<<<<<< HEAD
           doGit={() => this.doGit()}
           test={()=>this.setState({ui:this.test})}
+=======
+>>>>>>> 87656f85 (fix filters)
           />, 
 
           <></>,
